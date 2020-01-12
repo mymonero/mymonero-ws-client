@@ -1,0 +1,21 @@
+{
+  "name": "mymonero-ws-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/main/index.js",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mymonero/mymonero-ws-client.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "MyMonero",
+  "devDependencies": {
+    "mocha": "5.2.0"
+  },
+  "dependencies": {
+    "ws": "^7.2.1"
+  }
+}
