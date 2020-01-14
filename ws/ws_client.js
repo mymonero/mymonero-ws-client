@@ -362,6 +362,11 @@ class Class
 		});
 		return feed_id;
 	}
+	disconnect_feed(feed_id)
+	{
+		const self = this
+		self.ws_transport.disconnect_feed(feed_id)
+	}
 	//
 	// Accessors - Interface - Subscriptions
 	new_subscribe_payload(args)
