@@ -172,8 +172,9 @@ class Class
 			delete self.last_confirmed_tx_block_hash_by_addr[for_address]
 		}
 		//
-
-		// TODO: bubble up notification to forget txs with ids/hashes
+		self.forgot_txs_cb(forget_txs_with_ids)
+		//
+		// TODO: any other bubbling-up of notifications to forget txs with ids/hashes needed?
 	}
 	//
 	// Delegation - Internal

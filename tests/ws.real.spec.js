@@ -38,7 +38,7 @@ var hasReceivedA_block_info = false; // Respective "​block_info" responses are
 var lastReceived_block_height = null;
 //
 var first__req_id = null;
-var first__expectingNTxs = 1326;
+var first__expectingNTxs = 1350;
 var first__gotNTxs = 0;
 var first__done_fn = null;
 //
