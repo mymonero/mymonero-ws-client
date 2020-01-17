@@ -307,28 +307,32 @@ class Class
 		return false
 	}
 	//
-	connect(optl__cb, optl__ws_error_cb) // -> feed_id
+	connect(feed_channel, optl__cb, optl__ws_error_cb, optl__disconnected_cb) // -> feed_id
 	{
 		const self = this
 		const cb = optl__cb ? optl__cb : function() {}
 		const ws_error_cb = optl__ws_error_cb ? optl__ws_error_cb : function(err) {}
+		const disconnected_cb = optl__disconnected_cb ? optl__disconnected_cb : function() {}
 		//
 		const feed_id = self.ws_transport.new_feed_id(); // for local state accounting
 		self.ws_transport.connect_feed({
 			feed_id: feed_id,
+			feed_channel: feed_channel, // feed_channel ensures the connection being opened is going to the necessary back-end channel and is placed on the websocket URI as a querty parameter
 			error_fn: function(err)
 			{
-				self.isConnected = false
 				ws_error_cb(err)
 			},
 			connect_fn: function()
 			{
-				self.isConnected = true
 				cb();
+			},
+			disconnected_fn: function()
+			{
+				disconnected_cb()
 			},
 			on_message_fn: function(res)
 			{
-				console.log("[ws_client] Received message:", res)
+				// console.log("[ws_client] Received message:", res)
 				var did_handle = false;
 				did_handle = self._handleRes__stateless(feed_id, res); // .block_info, .unsubscribed, .error
 				if (did_handle) {

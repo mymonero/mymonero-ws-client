@@ -58,8 +58,13 @@ class Class extends ws_transport__base
 		if (!args.on_message_fn) {
 			throw Error("[ws_transport.real/connect_feed] Expected args.on_message_fn") // make bad args obvious
 		}
+		if (!args.feed_channel) {
+			throw Error("[ws_transport.real/connect_feed] Expected args.feed_channel") 
+		}
 		//
-		const ws = new WebSocket(this.ws_url_base + "/feed");
+		const ws_url = this.ws_url_base + "/feed?feed_channel=" + args.feed_channel
+		console.log("[ws_transport.real/connect_feed] Connecting to " + ws_url)
+		const ws = new WebSocket(ws_url);
 		self.websockets_by_feed_id[args.feed_id] = ws
 		ws.on('open', function()
 		{ 
@@ -74,7 +79,7 @@ class Class extends ws_transport__base
 		ws.on('message', function(msg)
 		{
 			const payload = JSON.parse(msg) // allowing exceptions to be thrown
-			console.log("[ws_transport.real/connect_feed/ws.on.message]")
+			// console.log("[ws_transport.real/connect_feed/ws.on.message]")
 			args.on_message_fn(payload)
 		});
 		ws.on('close', function()
@@ -82,6 +87,8 @@ class Class extends ws_transport__base
 			console.log("[ws_transport.real/connect_feed/ws.on.close]")
 			self.isConnected_by_feed_id[args.feed_id] = false;
 			delete self.websockets_by_feed_id[args.feed_id]
+			//
+			args.disconnected_fn(args.feed_id)
 		})
 	}
 	disconnect_feed(feed_id)
@@ -89,7 +96,7 @@ class Class extends ws_transport__base
 		const self = this
 		const ws = self.websockets_by_feed_id[feed_id]
 		if (typeof ws === 'undefined' || !ws) {
-			throw Error("[ws_transport.real/disconnect_feed] Expected ws for that feed_id")
+			throw Error("[ws_transport.real/disconnect_feed] Expected ws for that feed_id ("+feed_id+")")
 		}
 		ws.close()
 		// this ought to trigger ws.on('close') which will clean up local state
@@ -99,7 +106,7 @@ class Class extends ws_transport__base
 		const self = this
 		const ws = self.websockets_by_feed_id[feed_id]
 		if (typeof ws === 'undefined' || !ws) {
-			throw Error("[ws_transport.real/send_on_feed] Expected ws for that feed_id")
+			throw Error("[ws_transport.real/send_on_feed] Expected ws for that feed_id ("+feed_id+")")
 		}
 		ws.send(JSON.stringify(params))
 	}

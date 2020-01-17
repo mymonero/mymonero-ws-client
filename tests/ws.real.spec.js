@@ -68,8 +68,11 @@ const ws_transport = new (require(this_test_transport_path))({
 //
 const client = new (require('../ws/ws_client'))({
 	ws_transport: ws_transport,
-	// optl_persisted__last_confirmed_tx_id: 2,
-	// optl_persisted__last_block_hash: "a block hash",
+
+    // optl_persisted__last_confirmed_tx_id_by_addr,
+    // optl_persisted__last_confirmed_tx_block_hash_by_addr,
+    // optl_persisted__tx_hash_by_confirmed_tx_id_by_addr
+
 	block_info_cb: function(feed_id, block_height, block_hash, head_tx_id, per_byte_fee, fee_mask)
 	{
 		hasReceivedA_block_info = true
@@ -195,6 +198,7 @@ const client = new (require('../ws/ws_client'))({
 	}
 })
 //
+var feed_channel = "default" // TOOD: perform a /login for all appropriate accounts to obtain this
 var ws_feed_id = null;
 var addr1 = "43zxvpcj5Xv9SEkNXbMCG7LPQStHMpFCQCmkmR4u5nzjWwq5Xkv5VmGgYEsHXg4ja2FGRD5wMWbBVMijDTqmmVqm93wHGkg"
 var vk1 = "7bea1907940afdd480eff7c4bcadb478a0fbb626df9e3ed74ae801e18f53e104"
@@ -205,6 +209,7 @@ describe("websocket API tests", function()
 
 		var done_called = false
 		ws_feed_id = client.connect(
+			feed_channel, 
 			function() {
 				console.log("[ws.spec] Connected.")
 				assert.equal(done_called, false)
@@ -216,6 +221,9 @@ describe("websocket API tests", function()
 				assert.equal(done_called, false)
 				done_called = true
 				done(); // redundant?
+			},
+			function() {
+				// disconnected
 			}
 		)
 		assert.notEqual(null, ws_feed_id)
