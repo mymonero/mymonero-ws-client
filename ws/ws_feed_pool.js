@@ -173,23 +173,6 @@ class WSFeedPool
         return ws_feed_id
     }
     //
-    submit_subscribe(ws_feed_id, address, view_key)
-    {
-        const self = this
-        self.ws_client.send_payload__feed(ws_feed_id, self.ws_client.new_subscribe_payload({
-            address: address,
-            view_key: view_key,
-            // "since_confirmed_tx_id is handled internally in the client"
-        }))
-    }
-    submit_unsubscribe(ws_feed_id, address)
-    {
-        const self = this
-        self.ws_client.send_payload__feed(ws_feed_id, self.ws_client.new_unsubscribe_payload({
-            address: address
-        }))
-    }
-    //
     // Not really needed
     // _disconnect_feed(ws_feed_id)
     // {
