@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, MyMonero.com
+// Copyright (c) 2014-2020, MyMonero.com
 //
 // All rights reserved.
 //
@@ -95,6 +95,7 @@ class Class
 	didReceive_wholeTx(tx)
 	{
 		const self = this
+		console.log("Did receive whole tx with hash", tx.hash)
 		if (typeof tx.hash === 'undefined' || !tx.hash) {
 			throw Error("Expected tx.hash")
 		}

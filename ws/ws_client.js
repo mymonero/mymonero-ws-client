@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, MyMonero.com
+// Copyright (c) 2014-2020, MyMonero.com
 //
 // All rights reserved.
 //
@@ -408,7 +408,7 @@ class Class
 		}
 		self._common_placeArgValsIntoPayload(
 			args, payload, 
-			[ "payment_ids", "subaddresses", "since_block_hash" ]
+			[ /*"payment_ids", "subaddresses",*/ "since_block_hash" ]
 		);
 		return payload;
 	}
@@ -426,7 +426,7 @@ class Class
 		};
 		self._common_placeArgValsIntoPayload(
 			args, payload, 
-			[ "payment_ids", "subaddresses" ]
+			[ /*"payment_ids", "subaddresses"*/ ]
 		);
 		return payload;
 	}

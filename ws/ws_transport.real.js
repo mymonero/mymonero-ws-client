@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, MyMonero.com
+// Copyright (c) 2014-2020, MyMonero.com
 //
 // All rights reserved.
 //
@@ -74,6 +74,7 @@ class Class extends ws_transport__base
 		});
 		ws.on('error', function(err)
 		{
+			console.log("[ws_transport.real/connect_feed/ws.on.error]", err)
 			args.error_fn(err)
 		});
 		ws.on('message', function(msg)
