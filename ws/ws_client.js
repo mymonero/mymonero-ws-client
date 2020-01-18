@@ -233,7 +233,7 @@ class Class
 			res.tx.id = ws_parse_common.string_from_uint64string(res.tx.id)
 			//
 			self.store.didReceive_confirmTx(res.tx.id, res.tx.hash, res.tx.height, res.tx.block_hash)
-			self.confirm_tx_cb(feed_id, res.tx.id, res.tx.hash, res.tx.height)
+			self.confirm_tx_cb(feed_id, res.tx.id, res.tx.hash, res.tx.height, res.tx.block_hash)
 			//
 			return true // did_handle
 		}
@@ -370,6 +370,34 @@ class Class
 	{
 		const self = this
 		self.ws_transport.disconnect_feed(feed_id)
+	}
+	//
+	// Imperatives/Accessors - State restoration - Convenience
+	populate_from_saved_wallet(
+		address,
+		last_confirmed_tx_id,
+		last_confirmed_tx_block_hash,
+		block_hash_by_confirmed_tx_id
+	) {
+		const self = this
+		self.store.populate_from_saved_wallet(
+			address,
+			last_confirmed_tx_id,
+			last_confirmed_tx_block_hash,
+			block_hash_by_confirmed_tx_id
+		)
+	}
+	last_confirmed_tx_id_for_addr__orNull(address)
+	{
+		return this.store.last_confirmed_tx_id_for_addr__orNull(address)
+	}
+	last_confirmed_tx_block_hash_for_addr__orNull(address)
+	{
+		return this.store.last_confirmed_tx_block_hash_for_addr__orNull(address)
+	}
+	block_hash_by_confirmed_tx_id_by_addr__orNull(address)
+	{
+		return this.store.block_hash_by_confirmed_tx_id_by_addr__orNull(address)
 	}
 	//
 	// Accessors - Interface - Subscriptions

@@ -90,12 +90,33 @@ class Class
 		}
 		return v
 	}
+	block_hash_by_confirmed_tx_id_by_addr__orNull(address)
+	{
+		const v = this.block_hash_by_confirmed_tx_id_by_addr[address]
+		if (typeof v === 'undefined') {
+			return null // undefined -> null
+		}
+		return v
+	}
+	//
+	// Imperatives - State restoration
+	populate_from_saved_wallet(
+		address,
+		last_confirmed_tx_id,
+		last_confirmed_tx_block_hash,
+		block_hash_by_confirmed_tx_id
+	) {
+		const self = this
+		self.last_confirmed_tx_id_by_addr[address] = last_confirmed_tx_id
+		self.last_confirmed_tx_block_hash_by_addr[address] = last_confirmed_tx_block_hash
+		self.block_hash_by_confirmed_tx_id_by_addr[address] = block_hash_by_confirmed_tx_id
+	}
 	//
 	// Delegation - Interface
 	didReceive_wholeTx(tx)
 	{
 		const self = this
-		console.log("Did receive whole tx with hash", tx.hash)
+		// console.log("Did receive whole tx with hash", tx.hash)
 		if (typeof tx.hash === 'undefined' || !tx.hash) {
 			throw Error("Expected tx.hash")
 		}
