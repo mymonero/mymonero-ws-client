@@ -95,7 +95,7 @@ class Class
 	didReceive_wholeTx(tx)
 	{
 		const self = this
-		console.log("Did receive whole tx with hash", tx.hash)
+		// console.log("Did receive whole tx with hash", tx.hash)
 		if (typeof tx.hash === 'undefined' || !tx.hash) {
 			throw Error("Expected tx.hash")
 		}

@@ -233,7 +233,7 @@ class Class
 			res.tx.id = ws_parse_common.string_from_uint64string(res.tx.id)
 			//
 			self.store.didReceive_confirmTx(res.tx.id, res.tx.hash, res.tx.height, res.tx.block_hash)
-			self.confirm_tx_cb(feed_id, res.tx.id, res.tx.hash, res.tx.height)
+			self.confirm_tx_cb(feed_id, res.tx.id, res.tx.hash, res.tx.height, res.tx.block_hash)
 			//
 			return true // did_handle
 		}

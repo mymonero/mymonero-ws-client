@@ -196,7 +196,7 @@ const client = new (require('../ws/ws_client'))({
 		sawWalletStatusCbWith_addresses.push(for_address)
 		sawWalletStatusCbWith_scannedBlockHeights.push(scan_block_height)
 	},
-	confirm_tx_cb: function(feed_id, tx_id, tx_hash, tx_height)
+	confirm_tx_cb: function(feed_id, tx_id, tx_hash, tx_height, tx_block_hash)
 	{
 		sawConfirmTxCbWith_tx_ids.push(tx_id)
 	},
